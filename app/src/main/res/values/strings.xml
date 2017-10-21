@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">CreateAccountScreen</string>
+    <string name="instructionsText">To create an account please provide the following</string>
+    <string name="emailFieldText">email</string>
+    <string name="passwordFieldText">Set Password</string>
+    <string name="passwordLabelText">Choose Password</string>
+    <string name="confirmPasswordLabelText">Confirm Password</string>
+    <string name="btnSubmitText">Submit</string>
+</resources>
