@@ -6,4 +6,24 @@
     <string name="passwordLabelText">Choose Password</string>
     <string name="confirmPasswordLabelText">Confirm Password</string>
     <string name="btnSubmitText">Submit</string>
+    <string name="name_label_text">First Name:</string>
+    <string name="nickname_label_text">Nickname:</string>
+    <string name="nickname_field_text">(optional) eg. Mum, Dad, Granny, Grandad</string>
+    <string name="last_name_label_text">Last Name:</string>
+    <string name="btn_add_child_text">Add Child</string>
+    <string name="nickname_explanation_text">(optional) eg. Mum, Dad, Granny, Grandad</string>
+    <string name="btn_done_text">Done</string>
+    <string name="btn_goto_text">goto</string>
+    <string name="childs_first_name_label_text">Child\'s Name:</string>
+    <string name="childs_gender_label_text">Child\'s Gender:</string>
+    <string name="male_checkbox_text" >Male</string>
+    <string name="female_textbox_text">Female</string>
+    <string name="unspecified_gender_checkbox_text">unspecified</string>
+    <string name="childs_email_label_text">Child\'s Email:</string>
+    <string name="btn_add_this_child_text">Add Child</string>
+    <string name="btn_done_adding_children_text">Return To Previous Screen</string>
+    <string name="male_radio_text">Male</string>
+    <string name="female_radio_text">Female</string>
+    <string name="unspecified_gender_radio_text">Unspecified</string>
+    <string name="btn_go_back_text" >Go Back</string>
 </resources>

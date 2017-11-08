@@ -18,6 +18,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".UserInfo"></activity>
+        <activity android:name=".AddChildrenScreen"></activity>
+        <activity android:name=".AddChildScreenSimplified"></activity>
     </application>
 
 </manifest>

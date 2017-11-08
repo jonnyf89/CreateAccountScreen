@@ -1,6 +1,7 @@
 package com.ditkevinstreet.createaccountscreen;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -24,16 +25,18 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ValueEventListener;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+//public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity{
     private static final String TAG = "MainActivity";
 
     //UI references
     private EditText emailField, passwordField, confirmPasswordField;
     private Button btnSubmit;
-    private ProgressDialog progress;
+    //private ProgressDialog progress;
 
     //Firebase stuff
     private FirebaseAuth firebaseAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
 
 
 
@@ -42,17 +45,57 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        progress = new ProgressDialog(this);
+       // progress = new ProgressDialog(this);
 
         emailField = (EditText) findViewById(R.id.emailField);
         passwordField = (EditText) findViewById(R.id.passwordField);
         confirmPasswordField = (EditText) findViewById(R.id.confirmPasswordField);
         btnSubmit = (Button) findViewById(R.id.btnSubmit);
 
-        btnSubmit.setOnClickListener(this);
+        //btnSubmit.setOnClickListener(this);
+
+
 
 
         firebaseAuth = FirebaseAuth.getInstance();
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    // User is signed in
+                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                    toastMessage("Successfully signed in with: " + user.getEmail());
+                } else {
+                    // User is signed out
+                    Log.d(TAG, "onAuthStateChanged:signed_out");
+                    toastMessage("Not signed in.");
+                }
+
+            }
+        };
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                registerUser();
+                Intent intent = new Intent(MainActivity.this, UserInfo.class);
+                startActivity(intent);
+            }
+        });
+
+    }
+    @Override
+    public void onStart() {
+        super.onStart();
+        firebaseAuth.addAuthStateListener(mAuthListener);
+        firebaseAuth.signOut();
+    }
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mAuthListener != null) {
+            firebaseAuth.removeAuthStateListener(mAuthListener);
+        }
     }
 
     private void toastMessage(String message) {
@@ -77,8 +120,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Toast.makeText(this, "The password fields do not match", Toast.LENGTH_SHORT).show();
             return;
         }
-        progress.setMessage("Registering User");
-        progress.show();
+        //progress.setMessage("Registering User");
+        //progress.show();
 
         firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -89,16 +132,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         }else{
                             Toast.makeText(MainActivity.this, "Could not Register", Toast.LENGTH_SHORT).show();
                         }
-                        progress.dismiss();
+                       // progress.dismiss();
                     }
                 });
 
         }
 
 
-    public void onClick(View view) {
-            registerUser();
-    }
+    /*public void onClick(View view) {
+
+        registerUser();
+        Intent intent = new Intent(MainActivity.this, UserInfo.class);
+        startActivity(intent);
+    }*/
 
 }
 
