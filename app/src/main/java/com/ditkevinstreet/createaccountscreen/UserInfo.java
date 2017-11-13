@@ -121,7 +121,7 @@ public class UserInfo extends AppCompatActivity {
         mDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(TAG, "onClick: Done pressed");
+                Log.d(TAG, "onClick: Done pressed");//**************Dont declare these Strings here, put them up above and add them to the entity diagram
                 String firstName = mFirstName.getText().toString();
                 String lastName = mLastName.getText().toString();
                 String nickname = mNickname.getText().toString();

@@ -1,10 +1,11 @@
-package com.ditkevinstreet.createaccountscreen;
+//UNUSED CLASS, replaced with Parent and CHild classes
+/*package com.ditkevinstreet.createaccountscreen;
 
 import java.util.ArrayList;
 
-/**
- * Created by Admin on 22/10/2017.
- */
+
+Created by Admin on 22/10/2017.
+
 
 public class UserInformation {
 
@@ -47,3 +48,4 @@ public class UserInformation {
         this.nickname = nickname;
     }
 }
+*/

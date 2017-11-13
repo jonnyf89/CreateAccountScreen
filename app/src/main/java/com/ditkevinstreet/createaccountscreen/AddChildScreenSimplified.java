@@ -30,6 +30,7 @@ public class AddChildScreenSimplified extends AppCompatActivity {
     private EditText emailField;
 
     private String userID;
+    private String childEmail;
 
     private FirebaseDatabase mFirebaseDatabase;
     private FirebaseAuth firebaseAuth;
@@ -89,16 +90,16 @@ public class AddChildScreenSimplified extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "onClick: AddChild pressed");
-                String email = emailField.getText().toString();
+                 childEmail = emailField.getText().toString();
                 Log.d(TAG, "onClick: Attempting to add child to parent database object");
 
                 //excetion handling
-                if(!email.equals("")){
+                if(!childEmail.equals("")){
                     //here is the tricky part, will not be the same as before
                     //this below might work, it also might not because the 'children' is an array and here its a string
                     //ok this does work, the only issue is that the parent object hasnt been created yet so make it so
                     //parent adds details, then presses done, which saves it to the DB, then takes them to the child screen
-                    myRef.child("users").child("parents").child(userID).child("children").setValue(email);
+                    myRef.child("users").child("parents").child(userID).child("children").setValue(childEmail);
                     toastMessage("Child added");
 
                 }else{

@@ -29,6 +29,11 @@ import com.google.firebase.database.ValueEventListener;
 public class MainActivity extends AppCompatActivity{
     private static final String TAG = "MainActivity";
 
+    //attributes
+    private String email;
+    private String password;
+    private String conpass;
+
     //UI references
     private EditText emailField, passwordField, confirmPasswordField;
     private Button btnSubmit;
@@ -103,9 +108,9 @@ public class MainActivity extends AppCompatActivity{
     }
 
     public void registerUser() {
-        String email = emailField.getText().toString().trim();
-        String password = passwordField.getText().toString().trim();
-        String conpass = confirmPasswordField.getText().toString().trim();
+        email = emailField.getText().toString().trim();
+        password = passwordField.getText().toString().trim();
+        conpass = confirmPasswordField.getText().toString().trim();
 
         if (TextUtils.isEmpty(email)) {
             Toast.makeText(this, "Please enter email", Toast.LENGTH_SHORT).show();
@@ -136,7 +141,7 @@ public class MainActivity extends AppCompatActivity{
                     }
                 });
 
-        }
+    }
 
 
     /*public void onClick(View view) {
