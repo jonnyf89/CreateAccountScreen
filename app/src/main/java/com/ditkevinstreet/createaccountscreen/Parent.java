@@ -1,19 +1,34 @@
 package com.ditkevinstreet.createaccountscreen;
 
+import android.content.Intent;
+
+import java.util.ArrayList;
+
 /**
  * Created by Admin on 22/10/2017.
  */
 
-public class Parent {
+public class Parent implements IUser {
+
+    public final static String FIRSTNAME = "firstName";
+    public final static String LASTNAME = "lastName";
+    public final static String NICKNAME = "";
+    public final static String EMAIL = "email";
+
     private String firstName;
     private String lastName;
     private String nickname;
     private String email;
     private String password;
-    private String[] children;
+    //private ArrayList<Child> children;
+    private Object[] children;
+    //private Child[] children;
 
     public Parent(){
-
+        firstName = "firstName";
+        lastName = "lastName";
+        //children = new ArrayList<Child>();
+        children = new Object[]{};
     }
     public Parent(String firstName, String lastName, String nickname, String email, String password){
         this.firstName = firstName;
@@ -27,6 +42,7 @@ public class Parent {
         this.lastName = lastName;
         this.nickname=nickname;
     }
+
 
     public String getFirstName() {
         return firstName;
@@ -68,12 +84,31 @@ public class Parent {
         this.password = password;
     }
 
-    public String[] getChildren() {
+    /*public ArrayList<Child> getChildren() {
         return children;
     }
-
-    public void setChildren(String[] children) {
+     public void setChildren(ArrayList<Child> children) {
         this.children = children;
+    }
+
+    */
+
+    public Object[] getChildren() {
+        return children;
+    }
+    public void setChildren(Object[] children) {
+        this.children = children;
+    }
+
+
+
+
+    public static void packageIntent(Intent intent, String firstName, String lastName, String nickname, String email){
+        intent.putExtra(Parent.FIRSTNAME, firstName);
+        intent.putExtra(Parent.LASTNAME, lastName);
+        intent.putExtra(Parent.NICKNAME, nickname);
+        intent.putExtra(Parent.EMAIL, email);
+
     }
 }
 

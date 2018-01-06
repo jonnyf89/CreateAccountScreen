@@ -11,16 +11,31 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".WelcomeScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".MainActivity">
+            <!--<intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
+        </activity>
         <activity android:name=".UserInfo"></activity>
-        <activity android:name=".AddChildrenScreen"></activity>
         <activity android:name=".AddChildScreenSimplified"></activity>
+        <activity android:name=".CalendarView"></activity>
+        <activity android:name=".LogInScreen"></activity>
+        <activity android:name=".RegisterChild"></activity>
+        <activity android:name=".RegisterChild1"></activity>
+        <activity android:name=".RegisterChild2"></activity>
+        <activity android:name=".AddReminder"></activity>
+        <activity android:name=".DailyReminderList"></activity>
+        <activity android:name=".ReminderDetail"></activity>
     </application>
+    <uses-permission android:name="android.permission.VIBRATE"/>
 
 </manifest>

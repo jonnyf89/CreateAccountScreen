@@ -1,5 +1,6 @@
 package com.ditkevinstreet.createaccountscreen;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -18,6 +19,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+
+import static com.ditkevinstreet.createaccountscreen.Parent.EMAIL;
+import static com.ditkevinstreet.createaccountscreen.Parent.FIRSTNAME;
+import static com.ditkevinstreet.createaccountscreen.Parent.LASTNAME;
+import static com.ditkevinstreet.createaccountscreen.Parent.NICKNAME;
+
 /**
  * Created by Admin on 23/10/2017.
  */
@@ -26,8 +34,8 @@ public class AddChildScreenSimplified extends AppCompatActivity {
 
     private static final String TAG = "AddChildScreenSimplifie";
 
-    private Button btnAddChild, btnBack;
-    private EditText emailField;
+    private Button btnAddChild, btnFinish;
+    private EditText childsEmailField;
 
     private String userID;
     private String childEmail;
@@ -36,6 +44,8 @@ public class AddChildScreenSimplified extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private DatabaseReference myRef;
     private FirebaseAuth.AuthStateListener mAuthListener;
+    private Parent parent;
+    private ArrayList<Child> childrenList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,9 +53,11 @@ public class AddChildScreenSimplified extends AppCompatActivity {
         setContentView(R.layout.add_child_screen_simplified);
         Log.d(TAG, "onCreate: Entered onCreate");
 
-        btnAddChild = (Button) findViewById(R.id.btn_done);
-        btnBack = (Button) findViewById(R.id.btn_go_back);
-        emailField = (EditText) findViewById(R.id.childs_email_field);
+        btnAddChild = (Button) findViewById(R.id.btnAddChild);
+        btnFinish = (Button) findViewById(R.id.btn_finish);
+        childsEmailField = (EditText) findViewById(R.id.childsEmailField);
+        childrenList = new ArrayList<Child>();
+
 
         firebaseAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
@@ -69,7 +81,7 @@ public class AddChildScreenSimplified extends AppCompatActivity {
 
             }
         };
-        // Read from the database
+        // Read from the database //TODO do i need this?
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -86,27 +98,47 @@ public class AddChildScreenSimplified extends AppCompatActivity {
             }
         });
 
+        Bundle b = this.getIntent().getExtras();
+        if(b!=null){
+            String firstName = getIntent().getStringExtra(FIRSTNAME);
+            String lastName = getIntent().getStringExtra(LASTNAME);
+            String nickname = getIntent().getStringExtra(NICKNAME);
+            String email = getIntent().getStringExtra(EMAIL);
+
+            parent = new Parent(firstName, lastName, nickname);
+            parent.setEmail(email);
+
+        }
+
         btnAddChild.setOnClickListener(new View.OnClickListener() {//wait, is this what we want? in this model the childs account is being created by the parent, not just a reference to the email, it could work though, let the parent create the accout and then the child can just set a password
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "onClick: AddChild pressed");
-                 childEmail = emailField.getText().toString();
-                Log.d(TAG, "onClick: Attempting to add child to parent database object");
+                childEmail = childsEmailField.getText().toString().toLowerCase();
 
-                //excetion handling
+                //exception handling
                 if(!childEmail.equals("")){
-                    //here is the tricky part, will not be the same as before
-                    //this below might work, it also might not because the 'children' is an array and here its a string
-                    //ok this does work, the only issue is that the parent object hasnt been created yet so make it so
-                    //parent adds details, then presses done, which saves it to the DB, then takes them to the child screen
-                    myRef.child("users").child("parents").child(userID).child("children").setValue(childEmail);
-                    toastMessage("Child added");
+                    Child child = new Child(childEmail, parent);
+                    childrenList.add(child);
+                    childsEmailField.setText(null);
 
                 }else{
                     toastMessage("You have not provided an email address");
                 }
             }
         });
+        btnFinish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                myRef.child("parents").child(userID).setValue(parent);
+                myRef.child("parents").child(userID).child("children").setValue(childrenList);
+
+                Intent finishSetUp = new Intent(AddChildScreenSimplified.this, CalendarView.class);
+                startActivity(finishSetUp);
+            }
+        });
+
     }
     @Override
     public void onStart() {

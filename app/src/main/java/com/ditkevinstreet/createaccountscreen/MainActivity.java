@@ -1,6 +1,5 @@
 package com.ditkevinstreet.createaccountscreen;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -10,22 +9,19 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ValueEventListener;
+/*
+this is the parent register activity
+ */
 
-//public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 public class MainActivity extends AppCompatActivity{
     private static final String TAG = "MainActivity";
 
@@ -33,6 +29,7 @@ public class MainActivity extends AppCompatActivity{
     private String email;
     private String password;
     private String conpass;
+    private String userID;
 
     //UI references
     private EditText emailField, passwordField, confirmPasswordField;
@@ -42,6 +39,8 @@ public class MainActivity extends AppCompatActivity{
     //Firebase stuff
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+    private DatabaseReference myRef;
+    private FirebaseDatabase mFirebaseDatabase;
 
 
 
@@ -52,12 +51,14 @@ public class MainActivity extends AppCompatActivity{
 
        // progress = new ProgressDialog(this);
 
-        emailField = (EditText) findViewById(R.id.emailField);
-        passwordField = (EditText) findViewById(R.id.passwordField);
-        confirmPasswordField = (EditText) findViewById(R.id.confirmPasswordField);
-        btnSubmit = (Button) findViewById(R.id.btnSubmit);
+        emailField = (EditText) findViewById(R.id.email_field);
+        passwordField = (EditText) findViewById(R.id.password_field);
+        confirmPasswordField = (EditText) findViewById(R.id.confirm_password_field);
+        btnSubmit = (Button) findViewById(R.id.btnCreate);
 
-        //btnSubmit.setOnClickListener(this);
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        myRef = mFirebaseDatabase.getReference();
+
 
 
 
@@ -71,6 +72,7 @@ public class MainActivity extends AppCompatActivity{
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
                     toastMessage("Successfully signed in with: " + user.getEmail());
+                    userID = user.getUid();
                 } else {
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
@@ -83,8 +85,7 @@ public class MainActivity extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 registerUser();
-                Intent intent = new Intent(MainActivity.this, UserInfo.class);
-                startActivity(intent);
+
             }
         });
 
@@ -108,40 +109,56 @@ public class MainActivity extends AppCompatActivity{
     }
 
     public void registerUser() {
-        email = emailField.getText().toString().trim();
+        email = emailField.getText().toString().trim().toLowerCase();
         password = passwordField.getText().toString().trim();
         conpass = confirmPasswordField.getText().toString().trim();
 
         if (TextUtils.isEmpty(email)) {
-            Toast.makeText(this, "Please enter email", Toast.LENGTH_SHORT).show();
+            toastMessage("Please enter email");
             return;
         }
 
         if (TextUtils.isEmpty(password)) {
-            Toast.makeText(this, "Please choose password", Toast.LENGTH_SHORT).show();
+            toastMessage("Please choose password");
             return;
         }
         if(!password.equals(conpass)){
-            Toast.makeText(this, "The password fields do not match", Toast.LENGTH_SHORT).show();
+            toastMessage("The password fields do not match");
             return;
         }
-        //progress.setMessage("Registering User");
-        //progress.show();
 
         firebaseAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                .addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                            Toast.makeText(MainActivity.this, "Registered Successfully", Toast.LENGTH_SHORT).show();
+                            toastMessage("Registered Successfully");
+                            //CreateParent();
+                            //toastMessage("Created Parent");
+                            Intent intent = new Intent(MainActivity.this, UserInfo.class);
+                            startActivity(intent);
+
                         }else{
                             Toast.makeText(MainActivity.this, "Could not Register", Toast.LENGTH_SHORT).show();
                         }
                        // progress.dismiss();
                     }
                 });
-
     }
+    /*public void CreateParent(){
+        Parent parent = new Parent();
+        myRef.child("parents").child(userID).setValue(parent)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful()){
+                            toastMessage("Parent Object created");
+                        }else{
+                            toastMessage("Failed to create Parent Object");
+                        }
+                    }
+                });
+    }*/
 
 
     /*public void onClick(View view) {

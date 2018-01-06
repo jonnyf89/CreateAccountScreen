@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <TextView
-        android:id="@+id/childs_email_label"
+        android:id="@+id/childsEmailLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -15,28 +20,41 @@
         android:textSize="30sp" />
 
     <EditText
-        android:id="@+id/childs_email_field"
+        android:id="@+id/childsEmailField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/childs_email_label"
-        android:layout_centerHorizontal="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/childsEmailLabel"
         android:layout_marginTop="26dp"
         android:textAlignment="center" />
 
-    <Button
-        android:id="@+id/btn_done"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/childs_email_field"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="57dp"
-        android:text="@string/btn_add_child_text" />
+        <TextView
+            android:id="@+id/addChildInstructions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/childsEmailField"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="62dp"
+            android:text="@string/addChildInstructions"
+            android:textAlignment="center" />
 
     <Button
-        android:id="@+id/btn_go_back"
+        android:id="@+id/btnAddChild"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/btn_done"
-        android:layout_centerVertical="true"
-        android:text="@string/btn_go_back_text" />
-</RelativeLayout>
+        android:layout_below="@+id/addChildInstructions"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="42dp"
+        android:text="@string/btn_add_child_text" />
+
+        <Button
+            android:id="@+id/btn_finish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btnAddChild"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="28dp"
+            android:text="@string/btn_finish_text" />
+    </RelativeLayout>
+
+</ScrollView>

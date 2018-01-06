@@ -28,7 +28,7 @@ public class UserInfo extends AppCompatActivity {
     private static final String TAG = "UserInfo";
 
     //declaring buttons and editTexts
-    private Button mDone;
+    private Button btnGoToAddChildren;
     private EditText mFirstName, mLastName, mNickname;
     private String userID;
 
@@ -37,6 +37,12 @@ public class UserInfo extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private DatabaseReference myRef;
     private FirebaseAuth.AuthStateListener mAuthListener;
+    //private FirebaseUser user;
+
+    //User info variable
+    private String firstName;
+    private String lastName;
+    private String nickname;
 
 
 
@@ -46,7 +52,7 @@ public class UserInfo extends AppCompatActivity {
         setContentView(R.layout.user_info_page_layout);
 
         //buttons
-        mDone = (Button) findViewById(R.id.btn_done);
+        btnGoToAddChildren = (Button) findViewById(R.id.btnGoToAddChildren);
         //EditTexts
         mFirstName = (EditText) findViewById(R.id.first_name_field);
         mLastName = (EditText) findViewById(R.id.last_name_field);
@@ -55,8 +61,9 @@ public class UserInfo extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         myRef = mFirebaseDatabase.getReference();
-        FirebaseUser user = firebaseAuth.getCurrentUser();
+        //FirebaseUser user = firebaseAuth.getCurrentUser();
         //userID = user.getUid();// this line crashes app, moved it to inside the AuthStateListener
+
 
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -118,13 +125,36 @@ public class UserInfo extends AppCompatActivity {
                 }
             }
         });*/
-        mDone.setOnClickListener(new View.OnClickListener() {
+        btnGoToAddChildren.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(TAG, "onClick: Done pressed");//**************Dont declare these Strings here, put them up above and add them to the entity diagram
+                Log.d(TAG, "onClick: btnGoToAddChildren pressed");//**************Dont declare these Strings here, put them up above and add them to the entity diagram
                 String firstName = mFirstName.getText().toString();
                 String lastName = mLastName.getText().toString();
-                String nickname = mNickname.getText().toString();
+                String email = firebaseAuth.getCurrentUser().getEmail();
+                //TODO this isnt being stepped into
+                if(!mNickname.getText().toString().equals("")){
+                    String nickname = mNickname.getText().toString();
+                }else{
+                    String nickname = firstName;
+                }
+                if(!firstName.equals("") && !lastName.equals("")) {
+                    Intent intent = new Intent(UserInfo.this, AddChildScreenSimplified.class);
+                    Parent.packageIntent(intent, firstName, lastName, nickname, email);
+                    startActivity(intent);
+                }else{
+                    toastMessage("You must provide a first and last name");
+                }
+
+            }
+        });
+        /*btnFinishSetUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "onClick: btnFinishSetUp pressed");
+                firstName = mFirstName.getText().toString();
+                lastName = mLastName.getText().toString();
+                nickname = mNickname.getText().toString();
                 FirebaseUser user = firebaseAuth.getCurrentUser();
 
                 Log.d(TAG, "onClick: Attempting to add to database: \n"
@@ -134,23 +164,25 @@ public class UserInfo extends AppCompatActivity {
                 );
                 //exception handling
                 if(!firstName.equals("") && !lastName.equals("")){
-                    Parent parent = new Parent(firstName, lastName, nickname);
-                    myRef.child("users").child("parents").child(userID).setValue(parent);
+                    myRef.child("parents").child(userID).child("firstName").setValue(firstName);
+                    myRef.child("parents").child(userID).child("lastName").setValue(lastName);
+                    myRef.child("parents").child(userID).child("nickname").setValue(nickname);
                     toastMessage("Information saved");
-                    Intent intent = new Intent(UserInfo.this, AddChildScreenSimplified.class);
-                    startActivity(intent);
+                    Intent finishSetUp = new Intent(UserInfo.this, CalendarTest.class);
+                    startActivity(finishSetUp);
                 }else{
                     toastMessage("You must provide a first and last name");
                 }
+
             }
-        });
+        });*/
 
     }
     @Override
     public void onStart() {
         super.onStart();
         firebaseAuth.addAuthStateListener(mAuthListener);
-        firebaseAuth.signOut();
+        //firebaseAuth.signOut();
     }
     @Override
     public void onStop() {

@@ -4,42 +4,66 @@ package com.ditkevinstreet.createaccountscreen;
  * Created by Admin on 22/10/2017.
  */
 
-public class Child {
-    private String name;
-    private String parent;
+public class Child implements IUser {
+    private String firstName;
+    private String lastName;
+    //private String parent;
+    private Parent parent;
     private String email;
     private String password;
-    private String gender;
+    //private String gender;
+    private String userID;//needed?
 
     public Child(){
 
     }
-    public Child(String name, String parent, String email, String password, String gender){
-        this.name=name;
+
+    public Child(String email, Parent parent){
+        this.email=email;
+        this.parent=parent;
+    }
+    public Child(String firstName, String lastName, Parent parent, String email, String password /*,String gender*/){
+        this.firstName=firstName;
+        this.lastName=lastName;
         this.parent=parent;
         this.email=email;
         this.password=password;
-        this.gender = gender;
+        //this.gender = gender;
     }
-    public Child(String name, String gender, String email){
-        this.name=name;
+    public Child(String firstName, String lastName /*,String gender*/, String email){
+        this.firstName=firstName;
+        this.lastName=lastName;
         this.email=email;
-        this.gender = gender;
+       //this.gender = gender;
+    }
+    public Child(String email, String firstName, String lastName, Parent parent){
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.parent = parent;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String name) {
+        this.firstName = name;
     }
 
-    public String getParent() {
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String name) {
+        this.lastName = name;
+    }
+
+    public Parent getParent() {
         return parent;
     }
 
-    public void setParent(String parent) {
+    public void setParent(Parent parent) {
         this.parent = parent;
     }
 
