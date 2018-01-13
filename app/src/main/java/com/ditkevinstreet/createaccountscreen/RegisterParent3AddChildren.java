@@ -24,13 +24,12 @@ import java.util.ArrayList;
 import static com.ditkevinstreet.createaccountscreen.Parent.EMAIL;
 import static com.ditkevinstreet.createaccountscreen.Parent.FIRSTNAME;
 import static com.ditkevinstreet.createaccountscreen.Parent.LASTNAME;
-import static com.ditkevinstreet.createaccountscreen.Parent.NICKNAME;
 
 /**
  * Created by Admin on 23/10/2017.
  */
 
-public class AddChildScreenSimplified extends AppCompatActivity {
+public class RegisterParent3AddChildren extends AppCompatActivity {
 
     private static final String TAG = "AddChildScreenSimplifie";
 
@@ -50,7 +49,7 @@ public class AddChildScreenSimplified extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.add_child_screen_simplified);
+        setContentView(R.layout.register_parent3_add_children);
         Log.d(TAG, "onCreate: Entered onCreate");
 
         btnAddChild = (Button) findViewById(R.id.btnAddChild);
@@ -102,11 +101,11 @@ public class AddChildScreenSimplified extends AppCompatActivity {
         if(b!=null){
             String firstName = getIntent().getStringExtra(FIRSTNAME);
             String lastName = getIntent().getStringExtra(LASTNAME);
-            String nickname = getIntent().getStringExtra(NICKNAME);
             String email = getIntent().getStringExtra(EMAIL);
 
-            parent = new Parent(firstName, lastName, nickname);
+            parent = new Parent(firstName, lastName);
             parent.setEmail(email);
+            parent.setDeviceToken(Common.currentToken);
 
         }
 
@@ -134,7 +133,8 @@ public class AddChildScreenSimplified extends AppCompatActivity {
                 myRef.child("parents").child(userID).setValue(parent);
                 myRef.child("parents").child(userID).child("children").setValue(childrenList);
 
-                Intent finishSetUp = new Intent(AddChildScreenSimplified.this, CalendarView.class);
+                Intent finishSetUp = new Intent(RegisterParent3AddChildren.this, CalendarView.class);
+                toastMessage("Registered successfully");
                 startActivity(finishSetUp);
             }
         });

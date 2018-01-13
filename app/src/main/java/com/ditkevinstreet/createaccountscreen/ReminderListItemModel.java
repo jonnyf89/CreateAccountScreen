@@ -24,7 +24,9 @@ public class ReminderListItemModel {
         this.title = title;
     }
 
-    public ReminderListItemModel(String time, String data){
+    public ReminderListItemModel(String time, String title){
+        this.time = time;
+        this.title = title;
 
     }
 }

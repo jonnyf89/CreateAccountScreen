@@ -26,7 +26,8 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/childsEmailLabel"
         android:layout_marginTop="26dp"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:inputType="textEmailAddress"/>
 
         <TextView
             android:id="@+id/addChildInstructions"

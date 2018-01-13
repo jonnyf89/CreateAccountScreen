@@ -45,41 +45,12 @@
             android:layout_alignParentStart="true"
             android:layout_below="@+id/last_name_label" />
 
-        <TextView
-            android:id="@+id/nickname_label"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/last_name_field"
-            android:layout_marginTop="25dp"
-            android:text="@string/nickname_label_text"
-            android:textAlignment="center"
-            android:textSize="30sp" />
-
-        <TextView
-            android:id="@+id/nickname_explanation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/nickname_label"
-            android:layout_centerHorizontal="true"
-            android:text="@string/nickname_explanation_text"
-            android:textAlignment="center"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/nickname_field"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/nickname_explanation"
-            android:textAlignment="center" />
 
         <Button
             android:id="@+id/btnGoToAddChildren"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/nickname_field"
+            android:layout_below="@+id/user_info_page_instructions"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="93dp"
             android:text="@string/btnGoToAddChildren" />
@@ -88,7 +59,7 @@
             android:id="@+id/user_info_page_instructions"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/nickname_field"
+            android:layout_below="@+id/last_name_field"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="37dp"
             android:text="@string/user_info_page_instructions_text"

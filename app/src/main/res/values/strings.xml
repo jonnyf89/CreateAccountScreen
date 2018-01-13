@@ -59,4 +59,13 @@
     <string name="reminderDetailHeaderText">Reminder Detail</string>
     <string name="reminderDetailDateLabelText">Date:</string>
     <string name="reminderDetailTimeLabelText">Time</string>
+    <string name="btnSetAlarmText">Set Alarm</string>
+    <string name="btnCancelAlarmText">Cancel Alarm</string>
+    <string name="reminderDetailAlarmLabelText">Alarm:</string>
+    <string name="welcomeScreenInstructionsText">ADHDMate is a shared calendar organisartional app for families. This app can be used to coordinate your families schedules. At this time the app supports a single parent with any number of children. If this is your first time, follow the registration process as follows:</string>
+    <string name="welcomeStep1Text">1. Download the app on the parent\'s device.</string>
+    <string name="welcomeStep2">2. Press the \'Parent Register\' button and provide the requested information, including the email addresses of all of the children you want added to your account.</string>
+    <string name="welcomeStep3">3. Download the app on the children\'s devices.</string>
+    <string name="welcomeStep4">4. On each child\'s device, press \'Child Register\' and provide the requested information.</string>
+    <string name="btnBackToCalendarText">Back to calendar</string>
 </resources>

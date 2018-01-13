@@ -2,45 +2,37 @@ package com.ditkevinstreet.createaccountscreen;
 
 import android.content.Intent;
 
-import java.util.ArrayList;
-
 /**
  * Created by Admin on 22/10/2017.
  */
 
-public class Parent implements IUser {
+public class Parent {
 
     public final static String FIRSTNAME = "firstName";
     public final static String LASTNAME = "lastName";
-    public final static String NICKNAME = "";
     public final static String EMAIL = "email";
 
     private String firstName;
     private String lastName;
-    private String nickname;
     private String email;
     private String password;
-    //private ArrayList<Child> children;
     private Object[] children;
-    //private Child[] children;
+    private String deviceToken;
 
     public Parent(){
         firstName = "firstName";
         lastName = "lastName";
-        //children = new ArrayList<Child>();
         children = new Object[]{};
     }
-    public Parent(String firstName, String lastName, String nickname, String email, String password){
+    public Parent(String firstName, String lastName, String email, String password){
         this.firstName = firstName;
         this.lastName = lastName;
-        this.nickname=nickname;
         this.email = email;
         this.password = password;
     }
-    public Parent(String firstName, String lastName, String nickname){
+    public Parent(String firstName, String lastName){
         this.firstName = firstName;
         this.lastName = lastName;
-        this.nickname=nickname;
     }
 
 
@@ -60,14 +52,6 @@ public class Parent implements IUser {
         this.lastName = lastName;
     }
 
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -84,15 +68,6 @@ public class Parent implements IUser {
         this.password = password;
     }
 
-    /*public ArrayList<Child> getChildren() {
-        return children;
-    }
-     public void setChildren(ArrayList<Child> children) {
-        this.children = children;
-    }
-
-    */
-
     public Object[] getChildren() {
         return children;
     }
@@ -100,13 +75,17 @@ public class Parent implements IUser {
         this.children = children;
     }
 
+    public String getDeviceToken() {
+        return deviceToken;
+    }
 
+    public void setDeviceToken(String deviceToken) {
+        this.deviceToken = deviceToken;
+    }
 
-
-    public static void packageIntent(Intent intent, String firstName, String lastName, String nickname, String email){
+    public static void packageIntent(Intent intent, String firstName, String lastName, String email){
         intent.putExtra(Parent.FIRSTNAME, firstName);
         intent.putExtra(Parent.LASTNAME, lastName);
-        intent.putExtra(Parent.NICKNAME, nickname);
         intent.putExtra(Parent.EMAIL, email);
 
     }

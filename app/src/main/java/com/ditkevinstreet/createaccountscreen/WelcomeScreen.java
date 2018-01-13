@@ -8,7 +8,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.ditkevinstreet.createaccountscreen.Remote.APIService;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 /**
  * Created by Admin on 01/12/2017.
@@ -22,10 +24,15 @@ public class WelcomeScreen extends AppCompatActivity{
     private Button btnChildRegister;
 
     private FirebaseAuth mAuth;
+    APIService mAPIService;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Common.currentToken = FirebaseInstanceId.getInstance().getToken();
+
+        mAPIService = Common.getFCMClient();
 
 
         mAuth = FirebaseAuth.getInstance();
@@ -53,7 +60,7 @@ public class WelcomeScreen extends AppCompatActivity{
         btnParentRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent toParentReg = new Intent(WelcomeScreen.this, MainActivity.class);
+                Intent toParentReg = new Intent(WelcomeScreen.this, RegisterParent.class);
                 startActivity(toParentReg);
             }
         });
@@ -70,6 +77,18 @@ public class WelcomeScreen extends AppCompatActivity{
 
 
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mAuth = FirebaseAuth.getInstance();
+        if(mAuth.getCurrentUser() != null){
+            toastMessage("Already signed in as " + mAuth.getCurrentUser().getEmail());
+            startActivity(new Intent(WelcomeScreen.this, CalendarView.class));
+
+        }
+    }
+
     private void toastMessage(String message) {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
     }

@@ -22,8 +22,8 @@ import com.google.firebase.auth.FirebaseAuth;
 this is the parent register activity
  */
 
-public class MainActivity extends AppCompatActivity{
-    private static final String TAG = "MainActivity";
+public class RegisterParent extends AppCompatActivity{
+    private static final String TAG = "RegisterParent";
 
     //attributes
     private String email;
@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.register_parent);
 
        // progress = new ProgressDialog(this);
 
@@ -128,20 +128,19 @@ public class MainActivity extends AppCompatActivity{
         }
 
         firebaseAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
+                .addOnCompleteListener(RegisterParent.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             toastMessage("Registered Successfully");
                             //CreateParent();
                             //toastMessage("Created Parent");
-                            Intent intent = new Intent(MainActivity.this, UserInfo.class);
+                            Intent intent = new Intent(RegisterParent.this, RegisterParent2.class);
                             startActivity(intent);
 
                         }else{
-                            Toast.makeText(MainActivity.this, "Could not Register", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegisterParent.this, "Could not Register", Toast.LENGTH_SHORT).show();
                         }
-                       // progress.dismiss();
                     }
                 });
     }
@@ -164,7 +163,7 @@ public class MainActivity extends AppCompatActivity{
     /*public void onClick(View view) {
 
         registerUser();
-        Intent intent = new Intent(MainActivity.this, UserInfo.class);
+        Intent intent = new Intent(RegisterParent.this, RegisterParent2.class);
         startActivity(intent);
     }*/
 

@@ -13,50 +13,40 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 /**
  * Created by Admin on 21/10/2017.
  */
 
-public class UserInfo extends AppCompatActivity {
+public class RegisterParent2 extends AppCompatActivity {
 
-    private static final String TAG = "UserInfo";
+    private static final String TAG = "RegisterParent2";
 
     //declaring buttons and editTexts
     private Button btnGoToAddChildren;
-    private EditText mFirstName, mLastName, mNickname;
-    private String userID;
+    private EditText mFirstName, mLastName;
 
     //declaring Firebase stuff
     private FirebaseDatabase mFirebaseDatabase;
     private FirebaseAuth firebaseAuth;
     private DatabaseReference myRef;
     private FirebaseAuth.AuthStateListener mAuthListener;
-    //private FirebaseUser user;
 
-    //User info variable
-    private String firstName;
-    private String lastName;
-    private String nickname;
 
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.user_info_page_layout);
+        setContentView(R.layout.register_parent2);
 
         //buttons
         btnGoToAddChildren = (Button) findViewById(R.id.btnGoToAddChildren);
         //EditTexts
         mFirstName = (EditText) findViewById(R.id.first_name_field);
         mLastName = (EditText) findViewById(R.id.last_name_field);
-        mNickname = (EditText) findViewById(R.id.nickname_field);
         //firebase stuff
         firebaseAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
@@ -69,12 +59,11 @@ public class UserInfo extends AppCompatActivity {
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
+                    FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
                     toastMessage("Successfully signed in with: " + user.getEmail() + " please provide the following details");
-                    userID = user.getUid();
                 } else {
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
@@ -83,24 +72,24 @@ public class UserInfo extends AppCompatActivity {
 
             }
         };
-
-
-        // Read from the database
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                Log.d(TAG, "onDataChange: Added information to the DB: \n" + dataSnapshot.getValue());
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
-            }
-        });
+//
+//
+//        // Read from the database
+//        myRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                // This method is called once with the initial value and again
+//                // whenever data at this location is updated.
+//                Log.d(TAG, "onDataChange: Added information to the DB: \n" + dataSnapshot.getValue());
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError error) {
+//                // Failed to read value
+//                Log.w(TAG, "Failed to read value.", error.toException());
+//            }
+//        });
 
         /*mDone.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,14 +122,9 @@ public class UserInfo extends AppCompatActivity {
                 String lastName = mLastName.getText().toString();
                 String email = firebaseAuth.getCurrentUser().getEmail();
                 //TODO this isnt being stepped into
-                if(!mNickname.getText().toString().equals("")){
-                    String nickname = mNickname.getText().toString();
-                }else{
-                    String nickname = firstName;
-                }
                 if(!firstName.equals("") && !lastName.equals("")) {
-                    Intent intent = new Intent(UserInfo.this, AddChildScreenSimplified.class);
-                    Parent.packageIntent(intent, firstName, lastName, nickname, email);
+                    Intent intent = new Intent(RegisterParent2.this, RegisterParent3AddChildren.class);
+                    Parent.packageIntent(intent, firstName, lastName, email);
                     startActivity(intent);
                 }else{
                     toastMessage("You must provide a first and last name");
@@ -168,7 +152,7 @@ public class UserInfo extends AppCompatActivity {
                     myRef.child("parents").child(userID).child("lastName").setValue(lastName);
                     myRef.child("parents").child(userID).child("nickname").setValue(nickname);
                     toastMessage("Information saved");
-                    Intent finishSetUp = new Intent(UserInfo.this, CalendarTest.class);
+                    Intent finishSetUp = new Intent(RegisterParent2.this, CalendarTest.class);
                     startActivity(finishSetUp);
                 }else{
                     toastMessage("You must provide a first and last name");

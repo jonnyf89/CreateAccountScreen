@@ -30,12 +30,12 @@ public class LogInScreen extends AppCompatActivity {
 
     //declaring Firebase stuff
     private FirebaseAuth mAuth;
-    //private FirebaseAuth.AuthStateListener mAuthListener;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.log_in_layout);
+        final Bundle b = this.getIntent().getExtras();
 
 
         btnLogIn = (Button) findViewById(R.id.btnLogIn);
@@ -60,8 +60,15 @@ public class LogInScreen extends AppCompatActivity {
                                         toastMessage("Log in failed");
                                     }else{
                                         toastMessage("Signed in as " + emailString);//this will display even if the above fails
-                                        Intent toCalendar = new Intent(LogInScreen.this, CalendarView.class);
-                                        startActivity(toCalendar);
+                                        if(b==null) {
+                                            Intent toCalendar = new Intent(LogInScreen.this, CalendarView.class);
+                                            startActivity(toCalendar);
+                                        }else{
+                                            String reminderId = getIntent().getStringExtra("REMINDERID");
+                                            Intent toDetail = new Intent(LogInScreen.this, ReminderDetail.class);
+                                            toDetail.putExtra("REMINDERID", reminderId);
+                                            startActivity(toDetail);
+                                        }
                                     }
                                 }
                             });
@@ -79,6 +86,16 @@ public class LogInScreen extends AppCompatActivity {
             }
         });
 
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mAuth = FirebaseAuth.getInstance();
+        if(mAuth.getCurrentUser() != null){
+            toastMessage("Already signed in as " + mAuth.getCurrentUser().getEmail());
+            startActivity(new Intent(LogInScreen.this, CalendarView.class));
+
+        }
     }
     private void toastMessage(String message) {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();

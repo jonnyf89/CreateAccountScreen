@@ -13,17 +13,73 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="85dp"
+            android:layout_marginTop="24dp"
             android:text="@string/welcomeTextText"
             android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/instructions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/welcomeText"
+            android:layout_marginTop="17dp"
+            android:text="@string/welcomeScreenInstructionsText"
+            android:textAlignment="center"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/welcomeStep1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/instructions"
+            android:layout_marginTop="18dp"
+            android:text="@string/welcomeStep1Text"
+            android:textAlignment="center"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/welcomeStep2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/welcomeStep1"
+            android:layout_marginTop="18dp"
+            android:text="@string/welcomeStep2"
+            android:textAlignment="center"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/welcomeStep3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/welcomeStep2"
+            android:layout_marginTop="18dp"
+            android:text="@string/welcomeStep3"
+            android:textAlignment="center"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/welcomeStep4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/welcomeStep3"
+            android:layout_marginTop="18dp"
+            android:text="@string/welcomeStep4"
+            android:textAlignment="center"
+            android:textSize="14sp" />
+
 
         <Button
             android:id="@+id/btnLogIn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/welcomeText"
+            android:layout_below="@+id/welcomeStep4"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="88dp"
+            android:layout_marginTop="20dp"
             android:text="@string/btnLogInText" />
 
         <Button
@@ -32,7 +88,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/btnLogIn"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="6dp"
             android:text="@string/btnParentRegisterText" />
 
         <Button
@@ -41,7 +97,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/btnParentRegister"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="8dp"
             android:text="@string/btnChildRegister" />
     </RelativeLayout>
 </ScrollView>

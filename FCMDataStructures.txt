@@ -1,0 +1,24 @@
+{"notification":
+{"body" : "THis message sent to you by HTTP Post",
+"title":"Hello"},
+"to":"c0VVjFTvOdA:APA91bEm7vhlrXh_Bgaj7Oub9XZieVpGR5RKIcAfPr9q8k33XU_L9fjaNwLGg60H8DdNV4M2xHLB8vf6jgCGlV5DWT-rDWhP6sR58-1Av0oMUjIk_N8op3jwi2K1gWSaapmHO1NnvuDD"}
+
+
+
+{"notification":
+{"body" : "THis message sent to you by HTTP Post",
+"title":"Hello"
+},
+"data": {
+    "keyname": "any value "
+    },
+"to":"c0VVjFTvOdA:APA91bEm7vhlrXh_Bgaj7Oub9XZieVpGR5RKIcAfPr9q8k33XU_L9fjaNwLGg60H8DdNV4M2xHLB8vf6jgCGlV5DWT-rDWhP6sR58-1Av0oMUjIk_N8op3jwi2K1gWSaapmHO1NnvuDD"
+}
+
+
+{
+"data": {
+    "reminderId": "any value "
+    },
+"to":"c0VVjFTvOdA:APA91bEm7vhlrXh_Bgaj7Oub9XZieVpGR5RKIcAfPr9q8k33XU_L9fjaNwLGg60H8DdNV4M2xHLB8vf6jgCGlV5DWT-rDWhP6sR58-1Av0oMUjIk_N8op3jwi2K1gWSaapmHO1NnvuDD"
+} 

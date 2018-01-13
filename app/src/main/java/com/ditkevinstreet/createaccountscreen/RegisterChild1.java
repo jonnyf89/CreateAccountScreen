@@ -16,10 +16,6 @@ import android.widget.Toast;
 public class RegisterChild1 extends AppCompatActivity {
     private static final String TAG = "RegisterChild1";
 
-//    private FirebaseAuth firebaseAuth;
-//    private DatabaseReference reference;//not used?
-//    private FirebaseUser user;
-
     private EditText parentsEmailField, childsEmailField;
     private Button btnSubmit, btnBack;
 
@@ -30,8 +26,6 @@ public class RegisterChild1 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register_child_step_1);
 
-//        firebaseAuth = FirebaseAuth.getInstance();
-//        reference = FirebaseDatabase.getInstance().getReference();
 
         parentsEmailField = (EditText) findViewById(R.id.parentsEmailField);
         childsEmailField = (EditText) findViewById(R.id.childsEmailField);

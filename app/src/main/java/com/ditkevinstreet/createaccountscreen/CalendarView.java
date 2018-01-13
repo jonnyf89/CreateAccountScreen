@@ -39,7 +39,7 @@ public class CalendarView extends AppCompatActivity {
     private DatabaseReference myRef;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
-    private String userId, dateString;
+    private String userId, realDateString, displayDateString;
 
     private android.widget.CalendarView mCalendarView;
     private Button btnSignOut, btnAddReminder, btnViewDay;
@@ -62,7 +62,7 @@ public class CalendarView extends AppCompatActivity {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
 //        dateString = formatter.format(date);
-        dateString = formatter.format(calDate.getTime());
+        displayDateString = formatter.format(calDate.getTime());
         //dateString = date.toString();
 
         //firebase stuff
@@ -99,7 +99,7 @@ public class CalendarView extends AppCompatActivity {
         mCalendarView.setOnDateChangeListener(new android.widget.CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull android.widget.CalendarView view, int year, int month, int dayOfMonth) {
-                month = month + 1;
+                int displayMonth = month + 1;
                 Calendar cal = Calendar.getInstance();
                 cal.set(Calendar.YEAR, year);
                 cal.set(Calendar.MONTH, month);
@@ -113,8 +113,13 @@ public class CalendarView extends AppCompatActivity {
                 if(monthString.length()==1){
                     monthString = "0" + monthString;
                 }
+                String displayMonthString = Integer.toString(displayMonth);
+                if(displayMonthString.length()==1){
+                    displayMonthString = "0" + displayMonthString;
+                }
 
-                dateString = dayString + "/" + monthString + "/" + year;
+                realDateString = dayString + "/" + monthString + "/" + year;
+                displayDateString = dayString + "/" + displayMonthString + "/" + year;
 //                date = cal.getTime();
                 calDate = cal;
 
@@ -136,7 +141,8 @@ public class CalendarView extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(CalendarView.this, AddReminder.class);
-                intent.putExtra("DATESTRING", dateString);
+                intent.putExtra("REALDATESTRING", realDateString);
+                intent.putExtra("DISPLAYDATESTRING", displayDateString);
 //                intent.putExtra("DATE", date);
                 intent.putExtra("CALDATE", calDate);
 
@@ -148,7 +154,8 @@ public class CalendarView extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(CalendarView.this, DailyReminderList.class);
-                intent.putExtra("DATESTRING", dateString);
+                intent.putExtra("REALDATESTRING", realDateString);
+                intent.putExtra("DISPLAYDATESTRING", displayDateString);
                 intent.putExtra("CALDATE", calDate);
                 startActivity(intent);
             }

@@ -12,7 +12,7 @@ import java.util.UUID;
  */
 
 public class Reminder {
-    private UUID Id;
+    private String Id;
     private int minute;
     private int hour;
     private int day;
@@ -24,7 +24,9 @@ public class Reminder {
     private boolean creatorWantsNotification;
 
     public Reminder(Calendar reminderTime, String creatorUserId, /*ArrayList<Child> recipientsArrayList,*/ String title, String description ){
-        this.Id = UUID.randomUUID();
+        UUID realId = UUID.randomUUID();
+
+        this.Id = UUID.randomUUID().toString();
         this.minute = reminderTime.get(Calendar.MINUTE);
         this.hour = reminderTime.get(Calendar.HOUR_OF_DAY);
         this.day = reminderTime.get(Calendar.DAY_OF_MONTH);
@@ -40,6 +42,19 @@ public class Reminder {
 //            recipients[i] = recipientsArrayList.get(i);
 //        }
     }
+    public Reminder(String Id, String creatorUserId, boolean creatorWantsNotification, int day, String description, int hour,
+                    int minute, int month, String title, int year){
+        this.Id = Id;
+        this.creatorUserId = creatorUserId;
+        this.creatorWantsNotification = creatorWantsNotification;
+        this.day = day;
+        this.description = description;
+        this.hour = hour;
+        this.minute = minute;
+        this.month = month;
+        this.title = title;
+        this.year = year;
+    }
     public Reminder(){
 
     }
@@ -51,7 +66,7 @@ public class Reminder {
     public void setCreatorWantsNotification(boolean creatorWantsNotification) {
         this.creatorWantsNotification = creatorWantsNotification;
     }
-    public UUID getId(){
+    public String getId(){
         return Id;
     }
 
@@ -79,7 +94,43 @@ public class Reminder {
         return creatorUserId;
     }
 
-//    public Child[] getRecipients() {
+    public void setId(String id) {
+        Id = id;
+    }
+
+    public void setMinute(int minute) {
+        this.minute = minute;
+    }
+
+    public void setHour(int hour) {
+        this.hour = hour;
+    }
+
+    public void setDay(int day) {
+        this.day = day;
+    }
+
+    public void setMonth(int month) {
+        this.month = month;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public void setCreatorUserId(String creatorUserId) {
+        this.creatorUserId = creatorUserId;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    //    public Child[] getRecipients() {
 //        return recipients;
 //    }
 

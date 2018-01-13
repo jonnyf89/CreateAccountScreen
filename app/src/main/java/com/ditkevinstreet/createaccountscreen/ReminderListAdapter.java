@@ -29,7 +29,7 @@ public class ReminderListAdapter extends ArrayAdapter<ReminderListItemModel> {
         super(context, R.layout.reminder_list_item, resource);
         this.context = context;
         this.mItems = resource;
-        this.reminderList = reminderList;
+        this.reminderList = reminderList;//TODO why do we need this list of reminder objects?  SO we can view details of the reminder by clicking it
 
     }
 
@@ -48,5 +48,5 @@ public class ReminderListAdapter extends ArrayAdapter<ReminderListItemModel> {
 
     public Reminder getReminder(int position){
         return reminderList.get(position);
-    }
+    }//TODO why do I have this? SO we can view details of the reminder by clicking it
 }

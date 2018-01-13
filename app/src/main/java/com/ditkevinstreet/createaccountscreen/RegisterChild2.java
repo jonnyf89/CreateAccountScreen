@@ -1,5 +1,6 @@
 package com.ditkevinstreet.createaccountscreen;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -139,8 +140,6 @@ public class RegisterChild2 extends AppCompatActivity {
                 if((!firstName.equals(""))&&(!lastName.equals(""))&&(!password.equals(""))&&(!confPassword.equals(""))){
                     registerChild(childsEmail, password, confPassword);
 
-
-
                 }else if(firstName.equals("")){
                     toastMessage("You have not entered your first name");
                 }else if(lastName.equals("")){
@@ -165,13 +164,16 @@ public class RegisterChild2 extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                toastMessage("Registered Successfully");
+                                toastMessage("Registered successfully");
                                 FirebaseUser user = firebaseAuth.getCurrentUser();
                                 userId = user.getUid();
                                 myRef.child("parents").child(parentsUserId).child("children").child(childKey).child("firstName").setValue(firstName);
                                 myRef.child("parents").child(parentsUserId).child("children").child(childKey).child("lastName").setValue(lastName);
                                 myRef.child("parents").child(parentsUserId).child("children").child(childKey).child("userId").setValue(userId);
+                                myRef.child("parents").child(parentsUserId).child("children").child(childKey).child("deviceToken").setValue(Common.currentToken);
                                 myRef.child("parents").child(parentsUserId).child("children").child(childKey).child("parent").child("userId").setValue(parentsUserId);
+                                Intent intent = new Intent(RegisterChild2.this, CalendarView.class);
+                                startActivity(intent);
                             }
                         }
                     });
