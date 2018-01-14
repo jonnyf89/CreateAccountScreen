@@ -11,6 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <receiver android:name=".AlarmReceiver"></receiver>
         <activity android:name=".WelcomeScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -18,13 +19,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RegisterParent">
-            <!--<intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
-        </activity>
+        <activity android:name=".RegisterParent"></activity>
         <activity android:name=".RegisterParent2"></activity>
         <activity android:name=".RegisterParent3AddChildren"></activity>
         <activity android:name=".CalendarView"></activity>
@@ -45,7 +40,10 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT"></action>
             </intent-filter>
         </service>
+        <service android:name=".Service.RingtonePlayingService"
+            android:enabled="true"></service>
     </application>
+
     <uses-permission android:name="android.permission.VIBRATE"/>
 
 </manifest>

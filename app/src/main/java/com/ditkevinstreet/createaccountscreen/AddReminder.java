@@ -1,5 +1,6 @@
 package com.ditkevinstreet.createaccountscreen;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
@@ -82,6 +83,8 @@ public class AddReminder extends AppCompatActivity {
     private ListView familyMembersList;
     private ArrayList<RecipientModel> mItems;
     private ArrayList<Child> childRecipients;
+
+    private AlarmManager alarmManager;
 
 
     // IDs for menu items
@@ -282,6 +285,35 @@ public class AddReminder extends AppCompatActivity {
                             new DatabaseReference.CompletionListener() {
                         public void onComplete(DatabaseError error, DatabaseReference ref) {
                             toastMessage("Reminder Created");
+                            if (reminder.getCreatorWantsNotification()==true) {
+                                Intent alarmIntent = new Intent(AddReminder.this, AlarmReceiver.class);
+                                alarmIntent.putExtra("TITLE", reminder.getTitle());
+                                alarmIntent.putExtra("DESCRIPTION", reminder.getDescription());
+                                alarmIntent.putExtra("DAY", reminder.getDay());
+                                alarmIntent.putExtra("MONTH", reminder.getMonth());
+                                alarmIntent.putExtra("YEAR", reminder.getYear());
+                                alarmIntent.putExtra("HOUR", reminder.getHour());
+                                alarmIntent.putExtra("MINUTE", reminder.getMinute());
+                                alarmIntent.putExtra("CREATORUSERID", reminder.getCreatorUserId());
+                                alarmIntent.putExtra("CREATORWANTSNOTIFICATION", reminder.getCreatorWantsNotification());
+
+                                //put in extra string into alarmIntent, telling clock whether alarm is being set or silenced
+                                alarmIntent.putExtra("extra", "alarm on");
+
+                                PendingIntent alarmPendingIntent = PendingIntent.getBroadcast(AddReminder.this,
+                                        1, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+
+                                //set up calendar for alarmManager
+                                Calendar calendarForAlarm = Calendar.getInstance();
+                                calendarForAlarm.set(reminder.getYear(), reminder.getMonth(),
+                                        reminder.getDay(), reminder.getHour(), reminder.getMinute());
+
+                                //set up alarm manager
+                                alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+                                alarmManager.set(AlarmManager.RTC_WAKEUP, calendarForAlarm.getTimeInMillis(), alarmPendingIntent);
+
+                            }
                         }
                     });
                     Query query = myRef
@@ -304,7 +336,10 @@ public class AddReminder extends AppCompatActivity {
                                             String childUserId = childRecipients.get(i).getUserId();
                                             //Create entry in database of reminder for any selected children
                                             myRef.child("reminders").child(childUserId).child(reminder.getId().toString()).setValue(reminder);
-//                                            DataMessage dataMessage = new DataMessage("reminderId", reminder.getId());
+
+
+//
+//                                          DataMessage dataMessage = new DataMessage("reminderId", reminder.getId());
 
 //                                            String notificationMessage = "Testing new method";
                                             Notification notification = new Notification(reminder.getId());
