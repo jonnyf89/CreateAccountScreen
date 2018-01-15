@@ -23,9 +23,7 @@ public class Reminder {
     private String description;
     private boolean creatorWantsNotification;
 
-    public Reminder(Calendar reminderTime, String creatorUserId, /*ArrayList<Child> recipientsArrayList,*/ String title, String description ){
-        UUID realId = UUID.randomUUID();
-
+    public Reminder(Calendar reminderTime, String creatorUserId, String title, String description ){
         this.Id = UUID.randomUUID().toString();
         this.minute = reminderTime.get(Calendar.MINUTE);
         this.hour = reminderTime.get(Calendar.HOUR_OF_DAY);
@@ -35,26 +33,20 @@ public class Reminder {
         this.creatorUserId = creatorUserId;
         this.title = title;
         this.description = description;
-
-        //setting up recipients, needs to be an array rather than an arrayList
-//        this.recipients = new Child[recipientsArrayList.size()];
-//        for(int i = 0; i < recipientsArrayList.size(); i++){
-//            recipients[i] = recipientsArrayList.get(i);
-//        }
     }
-    public Reminder(String Id, String creatorUserId, boolean creatorWantsNotification, int day, String description, int hour,
-                    int minute, int month, String title, int year){
-        this.Id = Id;
-        this.creatorUserId = creatorUserId;
-        this.creatorWantsNotification = creatorWantsNotification;
-        this.day = day;
-        this.description = description;
-        this.hour = hour;
-        this.minute = minute;
-        this.month = month;
-        this.title = title;
-        this.year = year;
-    }
+//    public Reminder(String Id, String creatorUserId, boolean creatorWantsNotification, int day, String description, int hour,
+//                    int minute, int month, String title, int year){
+//        this.Id = Id;
+//        this.creatorUserId = creatorUserId;
+//        this.creatorWantsNotification = creatorWantsNotification;
+//        this.day = day;
+//        this.description = description;
+//        this.hour = hour;
+//        this.minute = minute;
+//        this.month = month;
+//        this.title = title;
+//        this.year = year;
+//    }
     public Reminder(){
 
     }
@@ -129,10 +121,6 @@ public class Reminder {
     public void setDescription(String description) {
         this.description = description;
     }
-
-    //    public Child[] getRecipients() {
-//        return recipients;
-//    }
 
     public String getTitle() {
         return title;

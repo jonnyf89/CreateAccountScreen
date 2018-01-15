@@ -21,14 +21,9 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.ditkevinstreet.createaccountscreen.NotificationStuff.DataMessage;
-import com.ditkevinstreet.createaccountscreen.NotificationStuff.DataSender;
-import com.ditkevinstreet.createaccountscreen.NotificationStuff.MessageSender;
 import com.ditkevinstreet.createaccountscreen.NotificationStuff.MyResponse;
 import com.ditkevinstreet.createaccountscreen.NotificationStuff.Notification;
 import com.ditkevinstreet.createaccountscreen.NotificationStuff.Sender;
-import com.ditkevinstreet.createaccountscreen.Remote.APIDataService;
-import com.ditkevinstreet.createaccountscreen.Remote.APIMessageService;
 import com.ditkevinstreet.createaccountscreen.Remote.APIService;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -61,8 +56,6 @@ public class AddReminder extends AppCompatActivity {
     private static final String TAG = "AddReminder";
 
     APIService mAPIService;
-    APIDataService mAPIDataService;
-    APIMessageService mAPIMessageService;
 
 
     private FirebaseDatabase mFirebaseDatabase;
@@ -97,8 +90,7 @@ public class AddReminder extends AppCompatActivity {
         setContentView(R.layout.add_reminder);
 
         mAPIService = Common.getFCMClient();
-        mAPIDataService = Common.getFCMDataClient();
-        mAPIMessageService = Common.getFCMMessageClient();
+
 
         firebaseAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
@@ -227,7 +219,6 @@ public class AddReminder extends AppCompatActivity {
                     toastMessage("Datasnapshot not found");
                 } else {
                     Log.d(TAG, "onDataChange: Parent found");
-                    toastMessage("Parent found");
                     DataSnapshot childrenSnapshot = dataSnapshot.child(userId).child("children");
                     Iterable<DataSnapshot> childrenChildren = childrenSnapshot.getChildren();
 
@@ -236,14 +227,12 @@ public class AddReminder extends AppCompatActivity {
                     for (DataSnapshot child : childrenChildren) {
                         Child c = child.getValue(Child.class);
                         String childName = c.getFirstName();
-                        RecipientModel recipientModel = new RecipientModel(childName, 0);
-                        mItems.add(recipientModel);
-                        childRecipients.add(c);//TODO this is not right, its adding them all regardless of whether they are ticked
+                        if(childName!=null && !childName.isEmpty()) {
+                            RecipientModel recipientModel = new RecipientModel(childName, 0);
+                            mItems.add(recipientModel);
+                            childRecipients.add(c);
+                        }
                     }
-
-//                    RecipientAdapter adapter = new RecipientAdapter(AddReminder.this, mItems);
-//
-//                    familyMembersList.setAdapter(adapter);
                 }
             }
             @Override
@@ -262,7 +251,7 @@ public class AddReminder extends AppCompatActivity {
                 description = descriptionField.getText().toString();
 
                 if(title.equals("")){
-                   toastMessage("A reminder must have a title.");
+                    toastMessage("A reminder must have a title.");
                 }else{
                     for(int i = 0; i < mItems.size(); i++){
                         if(mItems.get(i).getValue()==0){
@@ -283,39 +272,39 @@ public class AddReminder extends AppCompatActivity {
                     //Create entry in database of reminder for self
                     myRef.child("reminders").child(userId).child(reminder.getId().toString()).setValue(reminder,
                             new DatabaseReference.CompletionListener() {
-                        public void onComplete(DatabaseError error, DatabaseReference ref) {
-                            toastMessage("Reminder Created");
-                            if (reminder.getCreatorWantsNotification()==true) {
-                                Intent alarmIntent = new Intent(AddReminder.this, AlarmReceiver.class);
-                                alarmIntent.putExtra("TITLE", reminder.getTitle());
-                                alarmIntent.putExtra("DESCRIPTION", reminder.getDescription());
-                                alarmIntent.putExtra("DAY", reminder.getDay());
-                                alarmIntent.putExtra("MONTH", reminder.getMonth());
-                                alarmIntent.putExtra("YEAR", reminder.getYear());
-                                alarmIntent.putExtra("HOUR", reminder.getHour());
-                                alarmIntent.putExtra("MINUTE", reminder.getMinute());
-                                alarmIntent.putExtra("CREATORUSERID", reminder.getCreatorUserId());
-                                alarmIntent.putExtra("CREATORWANTSNOTIFICATION", reminder.getCreatorWantsNotification());
+                                public void onComplete(DatabaseError error, DatabaseReference ref) {
+                                    toastMessage("Reminder Created");
+                                    if (reminder.getCreatorWantsNotification()==true) {
+                                        Intent alarmIntent = new Intent(AddReminder.this, AlarmReceiver.class);
+                                        alarmIntent.putExtra("TITLE", reminder.getTitle());
+                                        alarmIntent.putExtra("DESCRIPTION", reminder.getDescription());
+                                        alarmIntent.putExtra("DAY", reminder.getDay());
+                                        alarmIntent.putExtra("MONTH", reminder.getMonth());
+                                        alarmIntent.putExtra("YEAR", reminder.getYear());
+                                        alarmIntent.putExtra("HOUR", reminder.getHour());
+                                        alarmIntent.putExtra("MINUTE", reminder.getMinute());
+                                        alarmIntent.putExtra("CREATORUSERID", reminder.getCreatorUserId());
+                                        alarmIntent.putExtra("CREATORWANTSNOTIFICATION", reminder.getCreatorWantsNotification());
 
-                                //put in extra string into alarmIntent, telling clock whether alarm is being set or silenced
-                                alarmIntent.putExtra("extra", "alarm on");
+                                        //put in extra string into alarmIntent, telling clock whether alarm is being set or silenced
+                                        alarmIntent.putExtra("extra", "alarm on");
 
-                                PendingIntent alarmPendingIntent = PendingIntent.getBroadcast(AddReminder.this,
-                                        1, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                                        PendingIntent alarmPendingIntent = PendingIntent.getBroadcast(AddReminder.this,
+                                                1, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 
-                                //set up calendar for alarmManager
-                                Calendar calendarForAlarm = Calendar.getInstance();
-                                calendarForAlarm.set(reminder.getYear(), reminder.getMonth(),
-                                        reminder.getDay(), reminder.getHour(), reminder.getMinute());
+                                        //set up calendar for alarmManager
+                                        Calendar calendarForAlarm = Calendar.getInstance();
+                                        calendarForAlarm.set(reminder.getYear(), reminder.getMonth(),
+                                                reminder.getDay(), reminder.getHour(), reminder.getMinute());
 
-                                //set up alarm manager
-                                alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-                                alarmManager.set(AlarmManager.RTC_WAKEUP, calendarForAlarm.getTimeInMillis(), alarmPendingIntent);
+                                        //set up alarm manager
+                                        alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+                                        alarmManager.set(AlarmManager.RTC_WAKEUP, calendarForAlarm.getTimeInMillis(), alarmPendingIntent);
 
-                            }
-                        }
-                    });
+                                    }
+                                }
+                            });
                     Query query = myRef
                             .child("parents").orderByKey().equalTo(userId);
                     query.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -330,93 +319,37 @@ public class AddReminder extends AppCompatActivity {
                                 for (DataSnapshot child : childrenChildren) {
                                     Child c = child.getValue(Child.class);
                                     String childName = c.getFirstName();
-                                    String childDeviceToken = c.getDeviceToken();
-                                    for(int i = 0; i < childRecipients.size(); i++){
-                                        if(childName.equals(childRecipients.get(i).getFirstName())){
-                                            String childUserId = childRecipients.get(i).getUserId();
-                                            //Create entry in database of reminder for any selected children
-                                            myRef.child("reminders").child(childUserId).child(reminder.getId().toString()).setValue(reminder);
+                                    if(childName!=null && !childName.isEmpty()) {
+                                        String childDeviceToken = c.getDeviceToken();
+                                        for (int i = 0; i < childRecipients.size(); i++) {
+                                            if (childName.equals(childRecipients.get(i).getFirstName())) {
+                                                String childUserId = childRecipients.get(i).getUserId();
+                                                //Create entry in database of reminder for any selected children
+                                                myRef.child("reminders").child(childUserId).child(reminder.getId().toString()).setValue(reminder);
+
+                                                Notification notification = new Notification(reminder.getId());
 
 
-//
-//                                          DataMessage dataMessage = new DataMessage("reminderId", reminder.getId());
+                                                Sender sender = new Sender(childDeviceToken, notification);
 
-//                                            String notificationMessage = "Testing new method";
-                                            Notification notification = new Notification(reminder.getId());
-
-//                                            Intent reminderIntent = new Intent(getApplicationContext(), ReminderDetail.class);
-//                                            reminderIntent.putExtra("DAY", calDate.get(Calendar.DAY_OF_MONTH));
-//                                            reminderIntent.putExtra("MONTH", calDate.get(Calendar.MONTH));
-//                                            reminderIntent.putExtra("YEAR", calDate.get(Calendar.YEAR));
-//                                            reminderIntent.putExtra("HOUR", calDate.get(Calendar.HOUR_OF_DAY));
-//                                            reminderIntent.putExtra("MINUTE", calDate.get(Calendar.MINUTE));
-//                                            reminderIntent.putExtra("TITLE", title);
-//                                            reminderIntent.putExtra("DESCRIPTION", description);
-//                                            PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, reminderIntent, FLAG_ONE_SHOT);
-
-
-                                            Sender sender = new Sender(childDeviceToken, notification);
-//                                            DataSender dataSender = new DataSender(childDeviceToken, dataMessage);
-
-//                                            RemoteMessage remoteMessage = new RemoteMessage.Builder(childDeviceToken)
-//                                                    .setMessageId("99")
-//                                                    .addData("reminderId", reminder.getId())
-//                                                    .build();
-//                                            MessageSender messageSender = new MessageSender(childDeviceToken, remoteMessage);
-
-                                            mAPIService.sendNotification(sender)
-                                                    .enqueue(new Callback<MyResponse>(){
-                                                        @Override
-                                                        public void onResponse(Call<MyResponse> call,
-                                                                               Response<MyResponse> response){if(response.body().success == 1){
-                                                                toastMessage("Success");
-                                                            }else{
-                                                                toastMessage("Failed");
+                                                mAPIService.sendNotification(sender)
+                                                        .enqueue(new Callback<MyResponse>() {
+                                                            @Override
+                                                            public void onResponse(Call<MyResponse> call,
+                                                                                   Response<MyResponse> response) {
+                                                                if (response.body().success == 1) {
+                                                                    toastMessage("Success");
+                                                                } else {
+                                                                    toastMessage("Failed");
+                                                                }
                                                             }
-                                                        }
 
-                                                        @Override
-                                                        public void onFailure(Call<MyResponse> call, Throwable t) {
-                                                            Log.e("ERROR",t.getMessage() );
-                                                        }
-
-                                                    });
-//                                            mAPIDataService.sendDataMessage(dataSender)
-//                                                                .enqueue(new Callback<MyResponse>(){
-//                                                                    @Override
-//                                                                    public void onResponse(Call<MyResponse> call,
-//                                                                                           Response<MyResponse> response){if(response.body().success == 1){
-//                                                                        toastMessage("Success");
-//                                                                    }else{
-//                                                                        toastMessage("Failed");
-//                                                                    }
-//                                                        }
-//
-//                                                        @Override
-//                                                        public void onFailure(Call<MyResponse> call, Throwable t) {
-//                                                            Log.e("ERROR",t.getMessage() );
-//                                                        }
-//
-//                                                    });
-//                                            mAPIMessageService.sendRemoteMessage(messageSender)
-//                                                    .enqueue(new Callback<MyResponse>(){
-//                                                        @Override
-//                                                        public void onResponse(Call<MyResponse> call,
-//                                                                               Response<MyResponse> response){if(response.body().success == 1){
-//                                                            toastMessage("Success");
-//                                                        }else{
-//                                                            toastMessage("Failed");
-//                                                        }
-//                                                        }
-//
-//                                                        @Override
-//                                                        public void onFailure(Call<MyResponse> call, Throwable t) {
-//                                                            Log.e("ERROR",t.getMessage() );
-//                                                        }
-//
-//                                                    });
-
-
+                                                            @Override
+                                                            public void onFailure(Call<MyResponse> call, Throwable t) {
+                                                                Log.e("ERROR", t.getMessage());
+                                                            }
+                                                        });
+                                            }
                                         }
                                     }
                                 }
@@ -428,8 +361,9 @@ public class AddReminder extends AppCompatActivity {
 
                         }
                     });
+                    finish();
                 }
-                finish();
+
             }
         });
 

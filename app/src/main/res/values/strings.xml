@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CreateAccountScreen</string>
+    <string name="app_name">ADHDMate</string>
     <string name="instructionsText">To create an account please provide the following</string>
     <string name="emailFieldText">Email</string>
     <string name="passwordFieldText">Set Password:</string>

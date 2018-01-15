@@ -6,7 +6,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_launcher_lightbulb"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
@@ -24,7 +24,6 @@
         <activity android:name=".RegisterParent3AddChildren"></activity>
         <activity android:name=".CalendarView"></activity>
         <activity android:name=".LogInScreen"></activity>
-        <activity android:name=".RegisterChild"></activity>
         <activity android:name=".RegisterChild1"></activity>
         <activity android:name=".RegisterChild2"></activity>
         <activity android:name=".AddReminder"></activity>

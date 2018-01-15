@@ -32,50 +32,6 @@ public class RecipientAdapter extends ArrayAdapter<RecipientModel>{
         this.mItems = resource;
     }
 
-//    public RecipientAdapter(Context context, RecipientModel[] resource) {
-//        super(context,R.layout.family_member_list_item,resource);
-//        // TODO Auto-generated constructor stub
-//        this.context = context;
-//        this.modelItems = resource;
-//    }
-
-//    public RecipientAdapter(Context context, RecipientModel[] resource) {
-//        super(context,R.layout.family_member_list_item,resource);
-//        // TODO Auto-generated constructor stub
-//        this.context = context;
-//        this.modelItems = resource;
-//    }
-//public RecipientAdapter(Context context, ArrayList<FamilyMemberListItem> resource) {
-//        super(context,R.layout.family_member_list_item,resource);
-//        // TODO Auto-generated constructor stub
-//        this.context = context;
-//        this.mItems = resource;
-//}
-
-    //@Override
-//public View getView(int position, View convertView, ViewGroup parent) {
-//        // TODO Auto-generated method stub
-//        LayoutInflater inflater = ((Activity)context).getLayoutInflater();
-//        convertView = inflater.inflate(R.layout.family_member_list_item, parent, false);
-//        TextView name = (TextView) convertView.findViewById(R.id.nameField);
-//        CheckBox cb = (CheckBox) convertView.findViewById(R.id.listItemCheckBox);
-//        name.setText(modelItems[position].getName());
-//        if(modelItems[position].getValue() == 1)
-//        cb.setChecked(true);
-//        else
-//        cb.setChecked(false);
-//        return convertView;
-//        }
-//@Override
-//    public View getView(int position, View convertView, ViewGroup parent) {
-//        LayoutInflater inflater = ((Activity)context).getLayoutInflater();
-//        convertView = inflater.inflate(R.layout.family_member_list_item, parent, false);
-//        TextView name = (TextView) convertView.findViewById(R.id.nameField);
-//        CheckBox cb = (CheckBox) convertView.findViewById(R.id.listItemCheckBox);
-//        name.setText(mItems.get(position).getName());
-//        cb.setChecked(false);
-//        return convertView;
-//}
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         final RecipientModel recipientModel = (RecipientModel) getItem(position);
@@ -86,11 +42,7 @@ public class RecipientAdapter extends ArrayAdapter<RecipientModel>{
         CheckBox checkBox = (CheckBox) convertView.findViewById(R.id.listItemCheckBox);
         name.setText(mItems.get(position).getName());
 
-//    if(mItems.get(position).getValue() == 1)
-//        checkBox.setChecked(true);
-//    else
-//        checkBox.setChecked(false);
-//
+
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

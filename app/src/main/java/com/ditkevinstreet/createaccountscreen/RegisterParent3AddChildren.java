@@ -109,7 +109,7 @@ public class RegisterParent3AddChildren extends AppCompatActivity {
 
         }
 
-        btnAddChild.setOnClickListener(new View.OnClickListener() {//wait, is this what we want? in this model the childs account is being created by the parent, not just a reference to the email, it could work though, let the parent create the accout and then the child can just set a password
+        btnAddChild.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "onClick: AddChild pressed");
@@ -120,6 +120,7 @@ public class RegisterParent3AddChildren extends AppCompatActivity {
                     Child child = new Child(childEmail, parent);
                     childrenList.add(child);
                     childsEmailField.setText(null);
+                    toastMessage("Child added");
 
                 }else{
                     toastMessage("You have not provided an email address");
@@ -134,7 +135,7 @@ public class RegisterParent3AddChildren extends AppCompatActivity {
                 myRef.child("parents").child(userID).child("children").setValue(childrenList);
 
                 Intent finishSetUp = new Intent(RegisterParent3AddChildren.this, CalendarView.class);
-                toastMessage("Registered successfully");
+                toastMessage("Registered Successfully");
                 startActivity(finishSetUp);
             }
         });

@@ -35,14 +35,6 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
-//    @Override
-//    public void onMessageReceived(RemoteMessage remoteMessage) {
-//        super.onMessageReceived(remoteMessage);
-//        showNotification(remoteMessage.getNotification());
-////        Map<String, String> data = remoteMessage.getData();
-//        String reminderId = data.get("reminderId");
-//        showNotification(reminderId);
-//    }
 @Override
 public void handleIntent(Intent intent){
     final Intent theIntent = intent;
@@ -67,10 +59,6 @@ public void handleIntent(Intent intent){
         notificationManager.notify(0, builder.build());
     }
     else{
-
-        //TODO call showNotification, with parameter String reminderID, which you will take form extras
-        //TODO figure our how to get it out
-//        Set<String> keys = extras.keySet(); This was to find out the key of the reminderId in the bundle
         showNotification(reminderId);
     }
 

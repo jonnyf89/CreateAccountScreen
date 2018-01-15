@@ -144,28 +144,5 @@ public class RegisterParent extends AppCompatActivity{
                     }
                 });
     }
-    /*public void CreateParent(){
-        Parent parent = new Parent();
-        myRef.child("parents").child(userID).setValue(parent)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if(task.isSuccessful()){
-                            toastMessage("Parent Object created");
-                        }else{
-                            toastMessage("Failed to create Parent Object");
-                        }
-                    }
-                });
-    }*/
-
-
-    /*public void onClick(View view) {
-
-        registerUser();
-        Intent intent = new Intent(RegisterParent.this, RegisterParent2.class);
-        startActivity(intent);
-    }*/
-
 }
 

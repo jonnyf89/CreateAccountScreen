@@ -72,48 +72,7 @@ public class RegisterParent2 extends AppCompatActivity {
 
             }
         };
-//
-//
-//        // Read from the database
-//        myRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                // This method is called once with the initial value and again
-//                // whenever data at this location is updated.
-//                Log.d(TAG, "onDataChange: Added information to the DB: \n" + dataSnapshot.getValue());
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError error) {
-//                // Failed to read value
-//                Log.w(TAG, "Failed to read value.", error.toException());
-//            }
-//        });
 
-        /*mDone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d(TAG, "onClick: Done pressed");
-                String firstName = mFirstName.getText().toString();
-                String lastName = mLastName.getText().toString();
-                String nickname = mNickname.getText().toString();
-
-                Log.d(TAG, "onClick: Attempting to add to database: \n"
-                + "first name: " + firstName + "\n"
-                + "last name: " + lastName + "\n"
-                + "nickname: " + nickname + "\n"
-                );
-                //exception handling
-                if(!firstName.equals("") && !lastName.equals("")){
-                    UserInformation userInformation = new UserInformation(firstName, lastName, nickname);
-                    myRef.child("users").child(userID).setValue(userInformation);
-                    toastMessage("Information saved");
-                }else{
-                    toastMessage("You must provide a first and last name");
-                }
-            }
-        });*/
         btnGoToAddChildren.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -132,35 +91,6 @@ public class RegisterParent2 extends AppCompatActivity {
 
             }
         });
-        /*btnFinishSetUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "onClick: btnFinishSetUp pressed");
-                firstName = mFirstName.getText().toString();
-                lastName = mLastName.getText().toString();
-                nickname = mNickname.getText().toString();
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-
-                Log.d(TAG, "onClick: Attempting to add to database: \n"
-                        + "first name: " + firstName + "\n"
-                        + "last name: " + lastName + "\n"
-                        + "nickname: " + nickname + "\n"
-                );
-                //exception handling
-                if(!firstName.equals("") && !lastName.equals("")){
-                    myRef.child("parents").child(userID).child("firstName").setValue(firstName);
-                    myRef.child("parents").child(userID).child("lastName").setValue(lastName);
-                    myRef.child("parents").child(userID).child("nickname").setValue(nickname);
-                    toastMessage("Information saved");
-                    Intent finishSetUp = new Intent(RegisterParent2.this, CalendarTest.class);
-                    startActivity(finishSetUp);
-                }else{
-                    toastMessage("You must provide a first and last name");
-                }
-
-            }
-        });*/
-
     }
     @Override
     public void onStart() {
